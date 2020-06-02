@@ -1,0 +1,38 @@
+﻿@model IEnumerable<WebApplication1.Models.Activities.RequestMeans>
+
+@{
+    ViewBag.Title = "Index";
+}
+
+<br />
+
+<div class="container text-center">
+    <p>
+        @Html.ActionLink("Novo meio de solicitação", "Create", null, new { @class = "btn btn-primary" })
+    </p>
+</div>
+<table class="table">
+    <thead>
+        <tr>
+            <th>
+                @Html.DisplayNameFor(model => model.Description)
+            </th>
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var item in Model)
+        {
+            <tr>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Description)
+                </td>
+                <td>
+                    @Html.ActionLink("Edit", "Edit", new { id = item.Id }) |
+                    @Html.ActionLink("Details", "Details", new { id = item.Id }) |
+                    @Html.ActionLink("Delete", "Delete", new { id = item.Id })
+                </td>
+            </tr>
+        }
+    </tbody>
+</table>

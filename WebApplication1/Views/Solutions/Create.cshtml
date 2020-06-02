@@ -1,0 +1,96 @@
+﻿@model WebApplication1.Models.Activities.Solution
+
+@{
+    ViewBag.Title = "Nova Solução";
+}
+@using (Html.BeginForm())
+{
+    @Html.AntiForgeryToken()
+    @Html.Hidden("EvidenceId", ((int)ViewBag.EvidenceId))
+    @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+
+    <div class="panel">
+        <div class="panel-heading" style="background-color: darksalmon">
+            <div class="form-horizontal">
+                <div class="form-group">
+                    <div class="col-md-4">
+                        @Html.LabelFor(model => model.ProblemId, "ProblemId", htmlAttributes: new { @class = "control-label" })
+                        @Html.DropDownList("ProblemId", null, htmlAttributes: new { @class = "form-control", disabled = "" })
+                        @Html.ValidationMessageFor(model => model.ProblemId, "", new { @class = "text-danger" })
+                    </div>
+                    <div class="col-md-4">
+                        @Html.LabelFor(model => model.SolutionBaseId, "SolutionBaseId", htmlAttributes: new { @class = "control-label" })
+                        @Html.DropDownList("SolutionBaseId", null, "", htmlAttributes: new { @class = "form-control" })
+                        @Html.ValidationMessageFor(model => model.SolutionBaseId, "", new { @class = "text-danger" })
+                    </div>
+                    <div class="col-md-4">
+                        @Html.LabelFor(model => model.SolutionOldId, "SolutionOldId", htmlAttributes: new { @class = "control-label" })
+                        @Html.DropDownList("SolutionOldId", null, "", htmlAttributes: new { @class = "form-control" })
+                        @Html.ValidationMessageFor(model => model.SolutionOldId, "", new { @class = "text-danger" })
+                    </div>
+                </div>
+                <div class="form-group">
+                    <div class="col-md-4">
+                        @Html.LabelFor(model => model.SituationId, "SituationId", htmlAttributes: new { @class = "control-label" })
+                        @Html.DropDownList("SituationId", null, htmlAttributes: new { @class = "form-control" })
+                        @Html.ValidationMessageFor(model => model.SituationId, "", new { @class = "text-danger" })
+                    </div>
+                    <div class="col-md-4">
+                        @Html.LabelFor(model => model.Status, htmlAttributes: new { @class = "control-label" })
+                        @Html.EnumDropDownListFor(model => model.Status, htmlAttributes: new { @class = "form-control" })
+                        @Html.ValidationMessageFor(model => model.Status, "", new { @class = "text-danger" })
+                    </div>
+                    <div class="col-md-4">
+                        @Html.LabelFor(model => model.ApplicationUserId, htmlAttributes: new { @class = "control-label" })
+                        @Html.HiddenFor(c => c.ApplicationUserId)
+                        @Html.EditorFor(model => model.ApplicationUser.Name, new { htmlAttributes = new { @class = "form-control", @disabled = "" } })
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="panel-body" style="margin: 0; padding: 0; ">
+            @Html.TextAreaFor(model => model.Description, new { htmlAttributes = new { @class = "form-control" } })
+            @Html.ValidationMessageFor(model => model.Description, "", new { @class = "text-danger" })
+        </div>
+        <div class="panel-footer">
+            <div class="form-group">
+                <div>
+                    <input type="submit" value="Create" class="btn btn-default" />
+                    @Html.ActionLink("Cancelar", "Edit", "Activities", new { id = ((int)ViewBag.ActivityId) }, new { @class = "btn btn-danger" })
+                </div>
+            </div>
+        </div>
+    </div>
+}
+
+@section Scripts {
+    @Scripts.Render("~/bundles/jqueryval")
+}
+
+<div class="modal fade" tabindex="-1" role="dialog">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                <h4 class="modal-title">Fechar Atividade</h4>
+            </div>
+            <div class="modal-body">
+                <p>Deseja fechar a agenda aberta referente a está evidência solucionada ? </p>
+            </div>
+            <div class="modal-footer">
+                @Html.ActionLink("Não", "Edit", "Activities", new { id = ((int)ViewBag.ActivityId) }, new { @class = "btn btn-danger" })
+                <button type="button" class="btn btn-primary">Sim, fechar agenda</button>
+            </div>
+        </div><!-- /.modal-content -->
+    </div><!-- /.modal-dialog -->
+</div><!-- /.modal -->
+
+<script type="text/javascript">
+    $.ajax("/Solutions/Create", function (data) {
+        if (data != null) {
+            if (data.Id != 0) {
+                
+            }
+        }
+    });
+</script>

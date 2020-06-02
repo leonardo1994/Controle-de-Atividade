@@ -1,0 +1,74 @@
+﻿@model WebApplication1.Models.Activities.Solution
+
+@{
+    ViewBag.Title = "Details";
+}
+
+<h2>Details</h2>
+
+<div>
+    <h4>Solution</h4>
+    <hr />
+    <dl class="dl-horizontal">
+        <dt>
+            @Html.DisplayNameFor(model => model.ApplicationUser.Name)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.ApplicationUser.Name)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.Problem.Title)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Problem.Title)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.Situation.Code)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Situation.Code)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.SolutionBase.Description)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.SolutionBase.Description)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.SolutionOld.Description)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.SolutionOld.Description)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.Description)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Description)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.Status)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Status)
+        </dd>
+
+    </dl>
+</div>
+<p>
+    @Html.ActionLink("Edit", "Edit", new { id = Model.Id }) |
+    @Html.ActionLink("Back to List", "Index")
+</p>

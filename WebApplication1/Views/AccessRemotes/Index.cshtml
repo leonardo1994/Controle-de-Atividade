@@ -1,0 +1,122 @@
+﻿@model IEnumerable<WebApplication1.Models.Activities.AccessRemote>
+
+@{
+    ViewBag.Title = "Index";
+}
+
+<br />
+<div class="container text-center">
+    <p>
+        @Html.ActionLink("Novo acesso remoto", "Create", null, new { @class = "btn btn-primary" })
+    </p>
+</div>
+<table class="table">
+    <thead>
+        <tr>
+            <th>
+                @Html.DisplayNameFor(model => model.Company.CompanyName)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.TypeAccess)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Domain)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Acesso)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.User)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Password)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.DirSystem)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.ConnectionString)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.TypeBase)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.DataBaseName)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.UserSsa)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.PasswordSsa)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.PhysicalAddress)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Ambiente)
+            </th>
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var item in Model)
+        {
+            <tr>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Company.CompanyName)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.TypeAccess)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Domain)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Acesso)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.User)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Password)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.DirSystem)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.ConnectionString)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.TypeBase)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.DataBaseName)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.UserSsa)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.PasswordSsa)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.PhysicalAddress)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Ambiente)
+                </td>
+                <td>
+                    <div class="btn-group">
+                        <button type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                            Opção <span class="caret"></span>
+                        </button>
+                        <ul class="dropdown-menu">
+                            <li>@Html.ActionLink("Edit", "Edit", new { id = item.Id })</li>
+                            <li>@Html.ActionLink("Details", "Details", new { id = item.Id })</li>
+                            <li>@Html.ActionLink("Delete", "Delete", new { id = item.Id })</li>
+                        </ul>
+                    </div>
+                </td>
+            </tr>
+        }
+    </tbody>
+</table>

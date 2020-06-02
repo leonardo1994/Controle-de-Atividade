@@ -1,0 +1,255 @@
+﻿<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>@ViewBag.Title - My ASP.NET Application</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/chosen/1.6.2/chosen.css" integrity="sha256-dqPXSfyyYAqTDlV0XgwmAeDoFrlHqfNt74YKmxAFL6E=" crossorigin="anonymous" />
+    <link rel="stylesheet" type="text/css" href="//cdn.datatables.net/1.10.12/css/jquery.dataTables.css">
+    @Scripts.Render("~/bundles/modernizr")
+    @Styles.Render("~/Content/css")
+</head>
+<body>
+    <ul class="nav nav-tabs navbar-static-top" id="menuPrincipal">
+        <li role="presentation">@Html.ActionLink("Home", "Index", "Home")</li>
+        <li role="presentation">@Html.ActionLink("Atividades", "Index", "Activities")</li>
+        <li role="presentation">@Html.ActionLink("Empresas", "Index", "Companies")</li>
+        <li role="presentation">@Html.ActionLink("Requisitantes", "Index", "Requesters")</li>
+        <li role="presentation">@Html.ActionLink("Meio de solicitação", "Index", "RequestMeans")</li>
+        <li role="presentation">@Html.ActionLink("Local erro", "Index", "LocalErrors")</li>
+        <li role="presentation">@Html.ActionLink("Modulo", "Index", "Modules")</li>
+        <li role="presentation">@Html.ActionLink("Tela", "Index", "Screens")</li>
+        <li role="presentation">@Html.ActionLink("Problema", "Index", "Problems")</li>
+        <li role="presentation">@Html.ActionLink("Situação", "Index", "Situations")</li>
+        <li role="presentation">@Html.ActionLink("Calendário", "Index", "Calendars")</li>
+        <li role="presentation">@Html.ActionLink("Acessos Remotos", "Index", "AccessRemotes")</li>
+        <li role="presentation">@Html.ActionLink("Biblioteca", "Index", "HelperCodes")</li>
+        <li role="presentation">@Html.ActionLink("Soluções", "Index", "ViewsGeneral")</li>
+    </ul>
+    <div>
+        <div class="tab-content">
+            <div role="tabpanel" class="tab-pane active" id="tabBody">
+                @RenderBody()
+            </div>
+        </div>
+        <hr />
+        <footer>
+            @Html.Partial("_LoginPartial")
+        </footer>
+    </div>
+
+    @Scripts.Render("~/bundles/jquery")
+    @RenderSection("scripts", required: false)
+    <script type="text/javascript" charset="utf8" src="//cdn.datatables.net/1.10.12/js/jquery.dataTables.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/tinymce/4.5.3/tinymce.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/chosen/1.6.2/chosen.jquery.js" integrity="sha256-L4R3B3t5kFOA5eFW0zYsx5hI8ZwopGsuGuxlfI8dhiM=" crossorigin="anonymous"></script>
+    @Scripts.Render("~/bundles/bootstrap")
+
+    <div id="modal-container" class="modal fade" tabindex="-1" role="dialog">
+    </div>
+    <iframe id="form_target" name="form_target" style="display:none"></iframe>
+
+    <form id="my_form" action="/Home/Upload" target="form_target" method="post" enctype="multipart/form-data" style="width:0;height:0;overflow:hidden">
+        <input name="file" type="file" onchange="$('#my_form').submit();this.value='';">
+    </form>
+    <script type="text/javascript">
+
+        var globalDados = null;
+        var elementoAtualiza = null;
+        function Salvar(url, formID) {
+            $.ajax({
+                url: url,
+                type: "post",
+                data: $(formID).serialize(),
+                success: function (data) {
+                    globalDados = data;
+                    $('#modal-container').modal('toggle');
+                }
+            });
+        }
+
+        $(function () {
+            $('body')
+                .on('click',
+                    '.modal-link',
+                    function (e) {
+                        $(this).attr('data-target', '#modal-container');
+                        $(this).attr('data-toggle', 'modal');
+                        elementoAtualiza = $(this).attr('elemento-update');
+                        e.preventDefault();
+                    });
+
+            //clear modal cache, so that new content can be loaded
+            $('#modal-container')
+                .on('hidden.bs.modal',
+                    function () {
+                        $(this).removeData('bs.modal');
+                        var elemento = $(this).attr('elemento-update');
+                        if (globalDados != null) {
+                            $(elementoAtualiza).append(new Option(globalDados.Name, globalDados.Id));
+                            $(elementoAtualiza).trigger("chosen:updated");
+                            elementoAtualiza = null;
+                            globalDados = null;
+                        }
+                    });
+        });
+
+        /*
+            Posiona a opção do menu de acordo com a URL
+            Sempre valida o controller que está chamando
+            Exemplo:
+            www.meusite.com.br/Companies/Index
+            Neste caso o controller é o Companies, então sempre que eu encontrar o Companies, eu vou deixar a aba
+            Empresas selecionada.
+            www.meusite.com.br/Companies/Create, www.meusite.com.br/Companies/Delete, www.meusite.com.br/Companies/Edit
+        */
+
+        /*
+            Transforma a url em array
+            [0] = ''
+            [1] = 'Companies'
+            [2] = 'Create'
+        */
+        var lenght = window.location.pathname.split('/');
+        var local = "";
+
+        // Verifico se existe mais de 3 posições, pois não considero a ultima, por que apenas olho para o controller.
+        if (lenght.length >= 3)
+            // Faço um loop no array, menos a última posição dele.
+            // Monta uma URL novamente, apenas com o controller
+            // /Companies/
+            for (var i = 0; i < 2; i++) {
+                if (i == 0)
+                    local = window.location.pathname.split('/')[i];
+                else
+                    local = local + '/' + window.location.pathname.split('/')[i];
+            }
+        else
+            local = window.location.pathname;
+        if (local == "/")
+            $("a[href='" + local + "']").parent('li').addClass('active');
+        else
+            // Se entrou no loop, eu pesquiso as urls que contém o controller, e ativo elas.
+            $("a[href*='" + local + "']").parent('li').addClass('active');
+
+        $(document).ready(function () {
+            try {
+                $('table').dataTable({
+                    "lengthMenu": [[20, 40, 80, -1], [20, 40, 80, "All"]]
+                });
+            } catch (e) {
+
+            }
+        });
+
+        $(document).ready(function () {
+            try {
+                $("select").chosen();
+            } catch (e) {
+
+            }
+        });
+
+        try {
+            tinymce.init({
+                selector: 'textarea',
+                height: 500,
+                theme: 'modern',
+                plugins: [
+                  'advlist autolink lists link image charmap print preview hr anchor pagebreak',
+                  'searchreplace wordcount visualblocks visualchars code fullscreen',
+                  'insertdatetime media nonbreaking save table contextmenu directionality',
+                  'emoticons template paste textcolor colorpicker textpattern imagetools codesample toc'
+                ],
+                toolbar1: 'undo redo | insert | styleselect | bold italic | alignleft aligncenter alignright alignjustify | bullist numlist outdent indent | link image',
+                toolbar2: 'print preview media | forecolor backcolor emoticons | codesample',
+                image_advtab: true,
+                templates: [
+                  { title: 'Test template 1', content: 'Test 1' },
+                  { title: 'Test template 2', content: 'Test 2' }
+                ],
+                file_browser_callback: function (field_name, url, type, win) {
+                    if (type == 'image') $('#my_form input').click();
+                },
+                content_css: [
+                  '',
+                  ''
+                ]
+            });
+        } catch (e) {
+
+        }
+
+        $ = jQuery;
+
+        $.fn.extend({
+
+            chosenDataHtml: function (options) {
+                return this.each(function (input_field) {
+                    var $this = $(this),
+
+                        formatSelection = options['formatSelection'] || function (e, data) {
+                            var chosen = data.chosen,
+                                selected = chosen.form_field_jq.find("option:enabled[value!='']:selected:first"),
+                                html = selected.data('html');
+
+                            if (html) {
+                                chosen.container.find('.chosen-single').find('> span:first').html(html);
+                                if (selected.length)
+                                    chosen.container.find('.chosen-single').removeClass('chosen-default')
+                            }
+                        },
+
+                        formatList = options['formatList'] || function (e, data) {
+                            var chosen = data.chosen,
+                                options = chosen.form_field.options,
+                                isFirstEmpty = options[0].value === '' ? 1
+                                                                        : 0;
+
+                            return $(chosen.container).find('.chosen-drop ul .group-option').each(function (index) {
+                                $(this).html($(options[index + isFirstEmpty]).data('html') || $(this).html())
+                            });
+                        };
+
+                    if (options !== "destroy") {
+                        $this
+                          .on("chosen:ready", formatSelection)
+                          .on("chosen:hiding_dropdown", formatSelection)
+                          .on("chosen:showing_dropdown", formatList);
+                    }
+
+                    return $this.chosen(options);
+                });
+            }
+
+        });
+
+        function onSuccess(data) { $('#result').text(data['result']); }
+
+        $('#format').click(function () {
+            $.ajax({
+                url: 'http://sqlformat.org/api/v1/format',
+                type: 'POST',
+                dataType: 'json',
+                crossDomain: true,
+                data: { sql: $('#sql').val(), reindent: 1 },
+                success: onSuccess,
+            });
+        })
+
+        $('#formatp').click(function () {
+            $.ajax({
+                url: 'http://sqlformat.org/api/v1/format',
+                dataType: 'jsonp',
+                crossDomain: true,
+                data: { sql: $('#sql').val(), reindent: 1 },
+                success: onSuccess,
+            });
+        })
+
+
+
+    </script>
+
+</body>
+</html>

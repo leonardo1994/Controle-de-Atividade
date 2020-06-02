@@ -1,0 +1,82 @@
+﻿@model IEnumerable<WebApplication1.Models.Activities.Calendar>
+
+@{
+    ViewBag.Title = "Calendário";
+}
+
+@{
+    var calendars = Model.GroupBy(c => c.DateInitial);
+    var disabled = Model.Any(c => !c.Send);
+}
+<br />
+<div class="row">
+    <div class="col-md-12">
+        @if (disabled)
+        {
+            @Html.ActionLink("Enviar Agenda", "Send", "Calendars", new { @class = "btn btn-success" })
+        }
+        else
+        {
+            @Html.ActionLink("Enviar Agenda", "Send", "Calendars", new { @class = "btn btn-success", disabled = "" })
+        }
+    </div>
+</div>
+
+<div class="row">
+    <div class="col-md-5 text-right">@Html.ActionLink("Mês anterior", "Retroceder", new { mes = Model.First()?.DateInitial.Month }, new { @class = "btn btn-md btn-danger" })</div>
+    <div class="col-md-2 text-center" style="font-size: 30px;">@System.Globalization.DateTimeFormatInfo.CurrentInfo.GetMonthName(Model.First().DateInitial.Month).ToUpper()</div>
+    <div class="col-md-5 text-left">@Html.ActionLink("Próximo mês", "Avancar", new { mes = Model.First()?.DateInitial.Month }, new { @class = "btn btn-md btn-primary" })</div>
+</div>
+
+<div class="row" style="margin: 5px;">
+    @foreach (var item in calendars)
+    {
+        <div class="col-md-3">
+            <div class="panel panel-warning">
+                @{
+                    var codigo = Guid.NewGuid().ToString();
+                }
+                <div class="panel-heading text-center" role="button" data-toggle="collapse" href="#@codigo" aria-expanded="false" aria-controls="@codigo">
+                    @item.First().DateInitial.ToShortDateString()
+                </div>
+                <div class="panel-body">
+                    <div class="collapse" id="@codigo">
+                        @foreach (var item1 in item.GroupBy(c => c.EvidenceId))
+                        {
+                            var status = "";
+                            <a href="/Evidences/Details/@item1.Key" class="modal-link">
+                                @if (item1.Last().ControlTime == WebApplication1.Models.Activities.ControlTime.Open)
+                                {
+                                    status = "alert-danger";
+                                }
+                                else
+                                {
+                                    status = "alert-success";
+                                }
+                                <div class="alert alert @status text-muted" style="text-decoration: none;">
+                                    <p>
+                                        @item1.First().Evidence.Activity.Company.CompanyName
+                                    </p>
+                                    <p>
+                                        @item1.First().Evidence.Title
+                                    </p>
+                                    <p>
+                                        @item1.First().TimeInitial.ToShortTimeString() - @item1.Last().TimeFinal.ToShortTimeString()
+                                    </p>
+                                    <p>
+                                        <a href="/Evidences/Edit/@item1.Key">Editar</a>
+                                        @if (item1.Last().ControlTime == WebApplication1.Models.Activities.ControlTime.Open)
+                                        {
+                                            <span>|</span> @Html.ActionLink("Fechar Agenda", "Closed", "Calendars", new { calendarId = @item1.Last().Id }, new { @class = "modal-link" })
+                                        }
+                                        | @Html.ActionLink("Realizado", "Details", "Calendars", new { id = @item1.Last().Id, data = @item.First().DateInitial }, new { @class = "modal-link" })
+                                    </p>
+                                </div>
+                            </a>
+                        }
+                    </div>
+                </div>
+            </div>
+        </div>
+                    }
+</div>

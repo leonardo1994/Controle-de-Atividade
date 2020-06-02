@@ -1,0 +1,42 @@
+﻿@model WebApplication1.Models.Activities.SolutionHelperCode
+
+@{
+    ViewBag.Title = "Details";
+}
+
+<h2>Details</h2>
+
+<div>
+    <h4>SolutionHelperCode</h4>
+    <hr />
+    <dl class="dl-horizontal">
+        <dt>
+            @Html.DisplayNameFor(model => model.ApplicationUser.Name)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.ApplicationUser.Name)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.HelperCode.Title)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.HelperCode.Title)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.Solution.Description)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Solution.Description)
+        </dd>
+
+    </dl>
+</div>
+<p>
+    @Html.ActionLink("Edit", "Edit", new { id = Model.Id }) |
+    @Html.ActionLink("Back to List", "Index")
+</p>

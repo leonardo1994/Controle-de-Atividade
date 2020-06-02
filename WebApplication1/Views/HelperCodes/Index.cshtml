@@ -1,0 +1,45 @@
+﻿@model IEnumerable<WebApplication1.Models.Activities.HelperCode>
+@using WebApplication1.Models.Activities
+@{
+    ViewBag.Title = "Index";
+}
+
+<div>
+
+    <!-- Nav tabs -->
+    <ul id="Biblioteca" class="nav nav-tabs" role="tablist" style="background-color:navy;">
+        <li role="presentation" class="active"><a href="#VGO_GEN" aria-controls="VGO_GEN" role="tab" data-toggle="tab">VGO_GEN</a></li>
+        <li role="presentation"><a href="#LPACK" aria-controls="LPACK" role="tab" data-toggle="tab">LPACK</a></li>
+        <li role="presentation"><a href="#ULIB" aria-controls="ULIB" role="tab" data-toggle="tab">ULIB</a></li>
+        <li role="presentation"><a href="#DB" aria-controls="DB" role="tab" data-toggle="tab">DB</a></li>
+        <li role="presentation"><a href="#VGO_CUSTOM" aria-controls="VGO_CUSTOM" role="tab" data-toggle="tab">VGO_CUSTOM</a></li>
+        <li role="presentation"><a href="#VGO_ACC" aria-controls="VGO_ACC" role="tab" data-toggle="tab">VGO_ACC</a></li>
+        <li role="presentation"><a href="#SQL_SERVER" aria-controls="SQL_SERVER" role="tab" data-toggle="tab">SQL SERVER</a></li>
+        <li role="presentation"><a href="#ORACLE" aria-controls="ORACLE" role="tab" data-toggle="tab">ORACLE</a></li>
+        <li role="presentation"><a href="#VISUAL_FOX_PRO" aria-controls="VISUAL_FOX_PRO" role="tab" data-toggle="tab">VISUAL FOX PRO</a></li>
+        <li role="presentation"><a href="#MENU_USUARIO" aria-controls="MENU_USUARIO" role="tab" data-toggle="tab">MENU DO USUARIO</a></li>
+        <li role="presentation"><a href="#DYNAMSOFT" aria-controls="DYNAMSOFT" role="tab" data-toggle="tab">DYNAMSOFT</a></li>
+        <li role="presentation"><a href="#DLL" aria-controls="DLL" role="tab" data-toggle="tab">DLL</a></li>
+        <li role="presentation"><a href="#ATALHO" aria-controls="ATALHO" role="tab" data-toggle="tab">ATALHO</a></li>
+        <li role="presentation"><a href="#LICENCA" aria-controls="LICENCA" role="tab" data-toggle="tab">LICENÇA</a></li>
+    </ul>
+
+    <!-- Tab panes -->
+    <div class="tab-content">
+        <div role="tabpanel" class="tab-pane active" id="VGO_GEN">@Html.Partial("_PartialTipo", Model.Where(c => c.Tipo == Tipo.VGO_GEN))</div>
+        <div role="tabpanel" class="tab-pane" id="LPACK">@Html.Partial("_PartialTipo", Model.Where(c => c.Tipo == Tipo.LPACK))</div>
+        <div role="tabpanel" class="tab-pane" id="ULIB">@Html.Partial("_PartialTipo", Model.Where(c => c.Tipo == Tipo.ULIB))</div>
+        <div role="tabpanel" class="tab-pane" id="DB">@Html.Partial("_PartialTipo", Model.Where(c => c.Tipo == Tipo.DB))</div>
+        <div role="tabpanel" class="tab-pane" id="VGO_CUSTOM">@Html.Partial("_PartialTipo", Model.Where(c => c.Tipo == Tipo.VGO_CUSTOM))</div>
+        <div role="tabpanel" class="tab-pane" id="VGO_ACC">@Html.Partial("_PartialTipo", Model.Where(c => c.Tipo == Tipo.VGO_ACC))</div>
+        <div role="tabpanel" class="tab-pane" id="SQL_SERVER">@Html.Partial("_PartialTipo", Model.Where(c => c.Tipo == Tipo.SQL_SERVER))</div>
+        <div role="tabpanel" class="tab-pane" id="ORACLE">@Html.Partial("_PartialTipo", Model.Where(c => c.Tipo == Tipo.ORACLE))</div>
+        <div role="tabpanel" class="tab-pane" id="VISUAL_FOX_PRO">@Html.Partial("_PartialTipo", Model.Where(c => c.Tipo == Tipo.VISUAL_FOX_PRO))</div>
+        <div role="tabpanel" class="tab-pane" id="MENU_USUARIO">@Html.Partial("_PartialTipo", Model.Where(c => c.Tipo == Tipo.MENU_USUARIO))</div>
+        <div role="tabpanel" class="tab-pane" id="DYNAMSOFT">@Html.Partial("_PartialTipo", Model.Where(c => c.Tipo == Tipo.DYNAMSOFT))</div>
+        <div role="tabpanel" class="tab-pane" id="DLL">@Html.Partial("_PartialTipo", Model.Where(c => c.Tipo == Tipo.DLL))</div>
+        <div role="tabpanel" class="tab-pane" id="ATALHO">@Html.Partial("_PartialTipo", Model.Where(c => c.Tipo == Tipo.ATALHO))</div>
+        <div role="tabpanel" class="tab-pane" id="LICENCA">@Html.Partial("_PartialTipo", Model.Where(c => c.Tipo == Tipo.LICENCA))</div>
+    </div>
+
+</div>

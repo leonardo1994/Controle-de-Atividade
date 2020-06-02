@@ -1,0 +1,117 @@
+﻿@using WebApplication1.Models.Activities
+@model IEnumerable<WebApplication1.Models.Activities.Activity>
+
+@{
+    ViewBag.Title = "Lista de Atividades";
+}
+<br/>
+<div class="panel">
+    <div class="panel-heading text-center">
+        @Html.ActionLink("Nova atividade", "Create", null, new { @class = "btn btn-primary" })
+    </div>
+    <div class="panel-body">
+        <table class="table">
+            <thead>
+                <tr>
+                    <th>Status</th>
+                    <th>
+                        @Html.DisplayNameFor(model => model.Id)
+                    </th>
+                    <th>
+                        @Html.DisplayNameFor(model => model.Company.CompanyName)
+                    </th>
+                    <th>
+                        @Html.DisplayNameFor(model => model.Requester.Name)
+                    </th>
+                    <th>
+                        @Html.DisplayNameFor(model => model.RequestMeans.Description)
+                    </th>
+                    <th>
+                        @Html.DisplayNameFor(model => model.Status.Code)
+                    </th>
+                    <th>
+                        @Html.DisplayNameFor(model => model.Title)
+                    </th>
+                    <th>
+                        @Html.DisplayNameFor(model => model.CalledNumber)
+                    </th>
+                    <th>
+                        @Html.DisplayNameFor(model => model.RequestDate)
+                    </th>
+                    <th>
+                        @Html.DisplayNameFor(model => model.FinalDate)
+                    </th>
+                    <th></th>
+                </tr>
+            </thead>
+            <tbody>
+                @foreach (var item in Model)
+                {
+                    var statusClass = "";
+                    var status = item.Evidencies.Any(C => !C.EvidenceSolutions.Any() || item.Evidencies.Any(c => c.Calendars.Any(d => d.ControlTime == ControlTime.Open)));
+                    if (status && !item.FinalDate.HasValue)
+                    {
+                        statusClass = "warning";
+                    }else if(status && item.FinalDate.HasValue)
+                    {
+                        statusClass = "danger";
+                    }
+                    else
+                    {
+                        statusClass = "success";
+                    }
+                    <tr class="@statusClass">
+                        <td>
+                            @if (status && !item.FinalDate.HasValue)
+                            {
+                                <span>1 Aberto</span>
+                            }else if (status && item.FinalDate.HasValue)
+                            {
+                                <span>2 Fechado (Solução pendente)</span>
+                            }
+                            else if(!item.FinalDate.HasValue)
+                            {
+                                <span>3 (Solucionado)</span>
+                            }
+                            else
+                            {
+                                <span>4 Fechado (Solucionado)</span>
+                            }
+                        </td>
+                        <td>
+                            @Html.DisplayFor(model => item.Id)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.Company.CompanyName)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.Requester.Name)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.RequestMeans.Description)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.Status.Code)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.Title)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.CalledNumber)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.RequestDate)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.FinalDate)
+                        </td>
+                        <td>
+                            @Html.ActionLink("Abrir", "Edit", new { id = item.Id }, new { @class = "btn btn-sm btn-warning" })
+                        </td>
+                    </tr>
+                }
+            </tbody>
+        </table>
+    </div>
+    <div class="panel-footer"></div>
+</div>

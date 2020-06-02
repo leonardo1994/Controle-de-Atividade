@@ -1,0 +1,73 @@
+﻿@model IEnumerable<WebApplication1.Models.Activities.EvidenceSolution>
+
+<div class="panel table-responsive">
+    <div class="panel-heading">
+        @using (Html.BeginForm("SearchView", "ViewsGeneral", FormMethod.Get))
+        {
+            <div class="input-group">
+                <span class="input-group-btn">
+                    <button class="btn btn-warning" type="submit">Pesquisar</button>
+                </span>
+                <input type="text" class="form-control" placeholder="Digite aqui para pesquisar" id="Pesquisa" name="Pesquisa">
+            </div><!-- /input-group -->
+        }
+    </div>
+    <div class="panel-body">
+        <table class="table table-responsive" id="TableViewsSolutions">
+            <thead>
+                <tr>
+                    <th>
+                        @Html.DisplayNameFor(model => model.Evidence.Activity.Title)
+                    </th>
+                    <th>
+                        @Html.DisplayNameFor(model => model.Evidence.Description)
+                    </th>
+                    <th>
+                        @Html.DisplayNameFor(model => model.Evidence.Activity.Company.CompanyName)
+                    </th>
+                    <th>
+                        @Html.DisplayNameFor(model => model.Evidence.Problem.Title)
+                    </th>
+                    <th>
+                        @Html.DisplayNameFor(model => model.Evidence.Screen.Description)
+                    </th>
+                    <th>
+                        @Html.DisplayNameFor(model => model.Evidence.LocalError.Description)
+                    </th>
+                    <th>
+                        @Html.DisplayNameFor(model => model.Solution.Description)
+                    </th>
+                </tr>
+            </thead>
+            <tbody>
+                @foreach (var item in Model)
+            {
+                    <tr>
+                        <td>
+                            @Html.DisplayFor(model => item.Evidence.Activity.Title)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(model => item.Evidence.Description)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(model => item.Evidence.Activity.Company.CompanyName)
+                        </td>
+                        <td>
+                            @Html.Raw(MvcHtmlString.Create(Server.HtmlDecode(item.Evidence.Problem.Description)).ToHtmlString())
+                        </td>
+                        <td>
+                            @Html.DisplayFor(model => item.Evidence.Screen.Name)
+                            @Html.DisplayFor(model => item.Evidence.Screen.Description)
+                        </td>
+                        <td>
+                            @Html.Raw(MvcHtmlString.Create(Server.HtmlDecode(item.Evidence.LocalError.Description)).ToHtmlString())
+                        </td>
+                        <td>
+                            @Html.DisplayFor(model => item.Solution.Description)
+                        </td>
+                    </tr>
+                }
+            </tbody>
+        </table>
+    </div>
+</div>

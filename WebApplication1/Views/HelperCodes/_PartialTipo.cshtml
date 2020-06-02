@@ -1,0 +1,45 @@
+﻿@model IEnumerable<WebApplication1.Models.Activities.HelperCode>
+
+<br />
+<div class="container text-center">
+    <p>
+        @Html.ActionLink("Novo", "Create", null, new { @class = "btn btn-primary" })
+    </p>
+</div>
+<div class="table-responsive">
+    <table class="table">
+        <thead>
+            <tr>
+                <th>
+                    @Html.DisplayNameFor(model => model.Tipo)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.Title)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.Description)
+                </th>
+                <th></th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var item in Model)
+            {
+                <tr>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.Tipo)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.Title)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.Description)
+                    </td>
+                    <td>
+                        @Html.ActionLink("Alterar", "Edit", new { id = item.Id }) 
+                    </td>
+                </tr>
+            }
+        </tbody>
+    </table>
+</div>

@@ -1,0 +1,80 @@
+﻿@model WebApplication1.Models.Activities.Solution
+
+@{
+    ViewBag.Title = "Delete";
+}
+
+<h2>Delete</h2>
+
+<h3>Are you sure you want to delete this?</h3>
+<div>
+    <h4>Solution</h4>
+    <hr />
+    <dl class="dl-horizontal">
+        <dt>
+            @Html.DisplayNameFor(model => model.ApplicationUser.Name)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.ApplicationUser.Name)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.Problem.Title)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Problem.Title)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.Situation.Code)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Situation.Code)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.SolutionBase.Description)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.SolutionBase.Description)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.SolutionOld.Description)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.SolutionOld.Description)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.Description)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Description)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.Status)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Status)
+        </dd>
+
+    </dl>
+
+    @using (Html.BeginForm()) {
+        @Html.AntiForgeryToken()
+
+        <div class="form-actions no-color">
+            <input type="submit" value="Delete" class="btn btn-default" /> |
+            @Html.ActionLink("Back to List", "Index")
+        </div>
+    }
+</div>

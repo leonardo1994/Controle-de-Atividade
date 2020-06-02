@@ -1,0 +1,86 @@
+﻿@model WebApplication1.Models.Activities.Requester
+
+@{
+    var isModal = (bool)TempData["IsModal"];
+    if (isModal)
+    {
+        Layout = null;
+    }
+}
+
+<form id="FRequesters" method="post" action="/Requesters/Create">
+    @Html.Hidden("isModal", isModal)
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">Cadastro de Requisitante</div>
+            <div class="modal-body">
+                @Html.AntiForgeryToken()
+                @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+                <div class="form-horizontal">
+                    <div class="form-group">
+                        @Html.LabelFor(model => model.Name, htmlAttributes: new { @class = "control-label col-md-2" })
+                        <div class="col-md-10">
+                            @Html.EditorFor(model => model.Name, new { htmlAttributes = new { @class = "form-control" } })
+                            @Html.ValidationMessageFor(model => model.Name, "", new { @class = "text-danger" })
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        @Html.LabelFor(model => model.Phones, htmlAttributes: new { @class = "control-label col-md-2" })
+                        <div class="col-md-10">
+                            @Html.EditorFor(model => model.Phones, new { htmlAttributes = new { @class = "form-control" } })
+                            @Html.ValidationMessageFor(model => model.Phones, "", new { @class = "text-danger" })
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        @Html.LabelFor(model => model.Email, htmlAttributes: new { @class = "control-label col-md-2" })
+                        <div class="col-md-10">
+                            @Html.EditorFor(model => model.Email, new { htmlAttributes = new { @class = "form-control" } })
+                            @Html.ValidationMessageFor(model => model.Email, "", new { @class = "text-danger" })
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        @Html.LabelFor(model => model.Skype, htmlAttributes: new { @class = "control-label col-md-2" })
+                        <div class="col-md-10">
+                            @Html.EditorFor(model => model.Skype, new { htmlAttributes = new { @class = "form-control" } })
+                            @Html.ValidationMessageFor(model => model.Skype, "", new { @class = "text-danger" })
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        @Html.LabelFor(model => model.CompanyId, "CompanyId", htmlAttributes: new { @class = "control-label col-md-2" })
+                        <div class="col-md-10">
+                            <div class="input-group">
+                                @Html.DropDownList("CompanyId", null, htmlAttributes: new { @class = "form-control" })
+                                <div class="input-group-btn">
+                                    @Html.ActionLink("+", "Create", "Companies", new { isModal = true }, new { @class = "modal-link btn btn-success", elemento_update = "#CompanyId" })
+                                </div>
+                            </div>
+                            @Html.ValidationMessageFor(model => model.CompanyId, "", new { @class = "text-danger" })
+                        </div>
+                    </div>
+
+                    @Html.HiddenFor(model => model.ApplicationUserId)
+                </div>
+            </div>
+            <div class="modal-footer">
+                @if (isModal)
+                {
+                    <button type="button" class="btn btn-success" onclick="Salvar('/Requesters/Create', '#FRequesters')">Salvar</button>
+                    <button type="button" class="btn btn-danger" data-dismiss="modal">Fechar</button>
+                }
+                else
+                {
+                    <button type="submit" class="btn btn-success">Salvar</button>
+                    @Html.ActionLink("Cancelar", "Index", "Requesters", null, new { @class= "btn btn-danger"})
+                }
+            </div>
+        </div>
+    </div>
+</form>
+
+@section Scripts {
+    @Scripts.Render("~/bundles/jqueryval")
+}

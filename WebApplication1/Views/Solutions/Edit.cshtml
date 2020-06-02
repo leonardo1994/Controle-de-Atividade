@@ -1,0 +1,94 @@
+﻿@model WebApplication1.Models.Activities.Solution
+
+@{
+    ViewBag.Title = "Nova Solução";
+}
+@using (Html.BeginForm())
+{
+    @*@Html.AntiForgeryToken()*@
+    @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+    @*@Html.Hidden("evidenceId", (int)ViewBag.EvidenceId)*@
+
+    <div class="panel">
+        <div class="panel-heading" style="background-color: darksalmon">
+            <div class="form-horizontal">
+                <div class="form-group">
+                    <div class="col-md-4">
+                        @Html.LabelFor(model => model.ProblemId, "ProblemId", htmlAttributes: new { @class = "control-label" })
+                        @Html.HiddenFor(model => model.ProblemId)
+                        @Html.EditorFor(model => model.Problem.Title, new { htmlAttributes = new { @class = "form-control", disabled = "" } })
+                        @Html.ValidationMessageFor(model => model.ProblemId, "", new { @class = "text-danger" })
+                    </div>
+                    <div class="col-md-4">
+                        @Html.LabelFor(model => model.SolutionBaseId, "SolutionBaseId", htmlAttributes: new { @class = "control-label" })
+                        @Html.DropDownList("SolutionBaseId", null, "", htmlAttributes: new { @class = "form-control" })
+                        @Html.ValidationMessageFor(model => model.SolutionBaseId, "", new { @class = "text-danger" })
+                    </div>
+                    <div class="col-md-4">
+                        @Html.LabelFor(model => model.SolutionOldId, "SolutionOldId", htmlAttributes: new { @class = "control-label" })
+                        @Html.DropDownList("SolutionOldId", null, "", htmlAttributes: new { @class = "form-control" })
+                        @Html.ValidationMessageFor(model => model.SolutionOldId, "", new { @class = "text-danger" })
+                    </div>
+                </div>
+                <div class="form-group">
+                    <div class="col-md-4">
+                        @Html.LabelFor(model => model.SituationId, "SituationId", htmlAttributes: new { @class = "control-label" })
+                        @Html.DropDownList("SituationId", null, htmlAttributes: new { @class = "form-control" })
+                        @Html.ValidationMessageFor(model => model.SituationId, "", new { @class = "text-danger" })
+                    </div>
+                    <div class="col-md-4">
+                        @Html.LabelFor(model => model.Status, htmlAttributes: new { @class = "control-label" })
+                        @Html.EnumDropDownListFor(model => model.Status, htmlAttributes: new { @class = "form-control" })
+                        @Html.ValidationMessageFor(model => model.Status, "", new { @class = "text-danger" })
+                    </div>
+                    <div class="col-md-4">
+                        @Html.LabelFor(model => model.ApplicationUserId, htmlAttributes: new { @class = "control-label" })
+                        @Html.HiddenFor(c => c.ApplicationUserId)
+                        @Html.EditorFor(model => model.ApplicationUser.Name, new { htmlAttributes = new { @class = "form-control", @disabled = "" } })
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="panel-body" style="margin: 0; padding: 0; ">
+            @Html.TextAreaFor(model => model.Description, new { htmlAttributes = new { @class = "form-control" } })
+            @Html.ValidationMessageFor(model => model.Description, "", new { @class = "text-danger" })
+            <div class="row">
+                <div class="panel panel-primary">
+                    <div class="panel-heading" data-toggle="collapse" href="#Arquivos" aria-expanded="true" aria-controls="Arquivos">
+                        Anexado @Model.SolutionArchives.Count Arquivo(s)
+                    </div>
+                    <div class="panel-body collapse" id="Arquivos">
+                        @Html.ActionLink("Incluir Arquivos", "Create", "SolutionArchives", new { solutionId = Model.Id }, new { @class = "btn btn-success modal-link  col-lg-offset-5", style = "margin-bottom: 1%;" })
+                        @{
+                            Html.RenderAction("Index", "SolutionArchives", new { solutionId = Model.Id });
+                        }
+                    </div>
+                </div>
+            </div>
+            <div class="row">
+                <div class="panel panel-warning">
+                    <div class="panel-heading" data-toggle="collapse" href="#CodigoAjuda" aria-expanded="true" aria-controls="CodigoAjuda">
+                        @Model.SolutionHelperCodes.Count Arquivo(s) Código Ajudas(s)
+                    </div>
+                    <div class="panel-body collapse" id="Arquivos">
+                        @Html.ActionLink("Incluir Código Ajuda", "IndexHelperCodes", "HelperCodes", new { solutionId = Model.Id }, new { @class = "btn btn-success modal-link  col-lg-offset-5", style = "margin-bottom: 1%;" })
+                        @{
+                            Html.RenderAction("Index", "SolutionHelperCodes", new { solutionId = Model.Id });
+                        }
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="panel-footer">
+            <div class="form-group">
+                <div>
+                    <input type="submit" value="Create" class="btn btn-default" />
+                </div>
+            </div>
+        </div>
+    </div>
+                            }
+
+@section Scripts {
+    @Scripts.Render("~/bundles/jqueryval")
+}

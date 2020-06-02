@@ -1,0 +1,23 @@
+﻿@model WebApplication1.Models.Activities.Evidence
+
+@{
+    Layout = null;
+}
+
+<div class="modal-dialog modal-sm" role="document">
+    <div class="modal-content">
+        <div class="modal-header">Deseja realmente deletar?</div>
+        <div class="modal-body">
+            <h4>Evidência</h4>
+            <h5>@Html.DisplayFor(model => model.Title)</h5>
+        </div>
+        <div class="modal-footer">
+            @using (Html.BeginForm())
+            {
+                @Html.AntiForgeryToken()
+                <input type="submit" value="Confirmar" class="btn btn-default" />
+                <button type="button" class="btn btn-danger" data-dismiss="modal">Cancelar</button>
+            }
+        </div>
+    </div>
+</div>

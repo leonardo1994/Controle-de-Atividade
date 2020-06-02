@@ -1,0 +1,58 @@
+﻿@model WebApplication1.Models.Activities.Module
+
+@{
+    var isModal = (bool)TempData["IsModal"];
+    if (isModal)
+    {
+        Layout = null;
+    }
+}
+
+<form id="FModules" method="post" action="/Modules/Create">
+    @Html.Hidden("isModal", isModal)
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">Cadastro de Modulos do Sistema</div>
+            <div class="modal-body">
+                @Html.AntiForgeryToken()
+                @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+                <div class="form-horizontal">
+                    <div class="form-group">
+                        @Html.LabelFor(model => model.Name, htmlAttributes: new { @class = "control-label col-md-2" })
+                        <div class="col-md-10">
+                            @Html.EditorFor(model => model.Name, new { htmlAttributes = new { @class = "form-control" } })
+                            @Html.ValidationMessageFor(model => model.Name, "", new { @class = "text-danger" })
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        @Html.LabelFor(model => model.Description, htmlAttributes: new { @class = "control-label col-md-2" })
+                        <div class="col-md-10">
+                            @Html.EditorFor(model => model.Description, new { htmlAttributes = new { @class = "form-control" } })
+                            @Html.ValidationMessageFor(model => model.Description, "", new { @class = "text-danger" })
+                        </div>
+                    </div>
+
+                    @Html.HiddenFor(model => model.ApplicationUserId)
+                </div>
+            </div>
+            <div class="modal-footer">
+                @if (isModal)
+                {
+                    <button type="button" class="btn btn-success" onclick="Salvar('/Modules/Create', '#FModules')">Salvar</button>
+                    <button type="button" class="btn btn-danger" data-dismiss="modal">Fechar</button>
+                }
+                else
+                {
+                    <button type="submit" class="btn btn-success">Salvar</button>
+                    @Html.ActionLink("Cancelar", "Index", "Modules", null, new { @class = "btn btn-danger" })
+                }
+            </div>
+        </div>
+    </div>
+</form>
+
+
+@section Scripts {
+    @Scripts.Render("~/bundles/jqueryval")
+}

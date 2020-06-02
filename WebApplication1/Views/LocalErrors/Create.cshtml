@@ -1,0 +1,51 @@
+﻿@model WebApplication1.Models.Activities.LocalError
+
+@{
+    var isModal = (bool)TempData["IsModal"];
+    if (isModal)
+    {
+        Layout = null;
+    }
+}
+
+<form id="FLocalErrors" method="post" action="/LocalErrors/Create">
+    @Html.Hidden("isModal", isModal)
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">Cadastro Local Erro</div>
+            <div class="modal-body">
+                @Html.AntiForgeryToken()
+                @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+                <div class="form-horizontal">
+                    @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+                    <div class="form-group">
+                        @Html.LabelFor(model => model.Description, htmlAttributes: new { @class = "control-label col-md-2" })
+                        <div class="col-md-10">
+                            @Html.EditorFor(model => model.Description, new { htmlAttributes = new { @class = "form-control" } })
+                            @Html.ValidationMessageFor(model => model.Description, "", new { @class = "text-danger" })
+                        </div>
+                    </div>
+
+                    @Html.HiddenFor(model => model.ApplicationUserId)
+                </div>
+            </div>
+            <div class="modal-footer">
+                @if (isModal)
+                {
+                    <button type="button" class="btn btn-success" onclick="Salvar('/LocalErrors/Create', '#FLocalErrors')">Salvar</button>
+                        <button type="button" class="btn btn-danger" data-dismiss="modal">Fechar</button>
+                }
+                else
+                {
+                    <button type="submit" class="btn btn-success">Salvar</button>
+                        @Html.ActionLink("Cancelar", "Index", "LocalErrors", null, new { @class = "btn btn-danger" })
+                }
+            </div>
+        </div>
+    </div>
+</form>
+
+
+@section Scripts {
+    @Scripts.Render("~/bundles/jqueryval")
+}

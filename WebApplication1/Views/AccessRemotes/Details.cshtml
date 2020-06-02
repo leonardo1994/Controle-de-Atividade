@@ -1,0 +1,114 @@
+﻿@model WebApplication1.Models.Activities.AccessRemote
+
+@{
+    ViewBag.Title = "Details";
+}
+
+<h2>Details</h2>
+
+<div>
+    <h4>AccessRemote</h4>
+    <hr />
+    <dl class="dl-horizontal">
+        <dt>
+            @Html.DisplayNameFor(model => model.ApplicationUser.Name)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.ApplicationUser.Name)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.TypeAccess)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.TypeAccess)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.Domain)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Domain)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.Acesso)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Acesso)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.User)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.User)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.Password)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Password)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.DirSystem)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.DirSystem)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.ConnectionString)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.ConnectionString)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.TypeBase)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.TypeBase)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.DataBaseName)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.DataBaseName)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.UserSsa)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.UserSsa)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.PasswordSsa)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.PasswordSsa)
+        </dd>
+
+    </dl>
+</div>
+<p>
+    @Html.ActionLink("Edit", "Edit", new { id = Model.Id }) |
+    @Html.ActionLink("Back to List", "Index")
+</p>

@@ -1,0 +1,50 @@
+﻿@model WebApplication1.Models.Activities.Calendar
+@using WebApplication1.HtmlHelpers
+
+@{ 
+    Layout = null;
+}
+
+@using (Html.BeginForm())
+{
+    <div class="modal-dialog modal-sm" role="document">
+        <div class="modal-content">
+            <div class="modal-header">Abrir Agenda</div>
+            <div class="modal-body">
+                @Html.AntiForgeryToken()
+
+                <div class="form-horizontal">
+                    @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+                    @Html.HiddenFor(model => model.EvidenceId)
+                    @Html.HiddenFor(model => model.ControlTime)
+                    @Html.HiddenFor(model => model.Send)
+                    @Html.HiddenFor(model => model.ApplicationUserId)
+
+                    <div class="form-group">
+                        <div class="col-md-12">
+                            @Html.LabelFor(model => model.DateInitial, htmlAttributes: new { @class = "control-label" })
+                            @Html.DatePickerFor(model => model.DateInitial, new { @class = "form-control"})
+                            @Html.ValidationMessageFor(model => model.DateInitial, "", new { @class = "text-danger" })
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        <div class="col-md-12">
+                            @Html.LabelFor(model => model.TimeInitial, htmlAttributes: new { @class = "control-label" })
+                            @Html.DatePickerFor(model => model.TimeInitial, new { @class = "form-control"})
+                            @Html.ValidationMessageFor(model => model.TimeInitial, "", new { @class = "text-danger" })
+                        </div>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-danger" data-dismiss="modal">Cancelar</button>
+                    <input type="submit" value="Salvar" class="btn btn-default" />
+                </div>
+            </div>
+        </div>
+    </div>
+}
+
+@section Scripts {
+    @Scripts.Render("~/bundles/jqueryval")
+}

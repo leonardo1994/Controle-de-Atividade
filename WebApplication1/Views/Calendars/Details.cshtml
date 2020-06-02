@@ -1,0 +1,42 @@
+﻿@model WebApplication1.Models.Activities.Evidence
+
+@{
+    Layout = null;
+}
+
+@using (Html.BeginForm())
+{
+    <div class="modal-dialog modal-lg" role="document">
+        <div class="modal-content">
+            <div class="modal-header">Atividades Realizadas</div>
+            <div class="modal-body">
+                @{ 
+                    TimeSpan totalHoras = new TimeSpan();
+                    var calendars = Model.Calendars.OrderBy(c => c.TimeInitial);
+                    foreach (var item in calendars)
+                    {
+                        totalHoras += item.TimeFinal - item.TimeInitial;
+                    }
+                }
+                <p>Hora Ficha : @calendars.First().TimeInitial.ToShortTimeString() às @calendars.First().TimeInitial.AddMinutes(totalHoras.TotalMinutes).ToShortTimeString()</p>
+                <p>Evidência: @Model.Title</p>
+                <p>Soluções: </p>
+
+                <hr />
+                @foreach (var item in Model.EvidenceSolutions)
+                {
+                    @Html.Raw(MvcHtmlString.Create(item.Solution.Description).ToHtmlString())
+                    <hr />
+                }
+
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-danger" data-dismiss="modal">Fechar</button>
+            </div>
+        </div>
+    </div>
+}
+
+@section Scripts {
+    @Scripts.Render("~/bundles/jqueryval")
+}

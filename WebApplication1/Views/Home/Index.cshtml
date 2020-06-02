@@ -1,0 +1,40 @@
+﻿@{
+    ViewBag.Title = "Home Page";
+}
+
+<div class="well well-sm">
+    <h1>Controle de Atividades</h1>
+    <p class="lead">Controle de atividades interna</p>
+</div>
+
+<div>
+    <!-- Nav tabs -->
+    <ul class="nav nav-tabs" role="tablist">
+        <li role="presentation" class="active"><a href="#home" aria-controls="home" role="tab" data-toggle="tab">Formatar Query</a></li>
+    </ul>
+
+    <!-- Tab panes -->
+    <div class="tab-content">
+        <div role="tabpanel" class="tab-pane active" id="home">
+
+            <div class="row">
+                <h2 class="text-center">Formatar Query</h2>
+                <div class="col-md-6">
+                    <div class="input-group">
+                        <span class="input-group-btn">
+                            <button id="format" class="btn btn-success">Formatar</button>
+                            @*<button id="formatp" class="btn btn-success">Formatar</button>*@
+                        </span>
+                        <input id="sql" class="form-control" type="text" /> <br />
+                    </div><!-- /input-group -->
+                </div>
+                <div class="col-md-6" style="max-height: 400px;">
+                    <strong>Resultado:</strong><br />
+                    <pre class="pre-scrollable" id="result"></pre>
+                </div>
+            </div>
+
+        </div>
+    </div>
+
+</div>

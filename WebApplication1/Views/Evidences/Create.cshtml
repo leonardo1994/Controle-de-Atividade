@@ -1,0 +1,113 @@
+﻿@model WebApplication1.Models.Activities.Evidence
+@using WebApplication1.HtmlHelpers
+
+@using (Html.BeginForm())
+{
+    if (Model.ActivityId != 0)
+    {
+        @Html.AntiForgeryToken()
+    }
+    else
+    {
+        Layout = null;
+    }
+
+    @Html.HiddenFor(c => c.ActivityId)
+    @Html.HiddenFor(model => model.ApplicationUserId)
+    <div class="panel panel-background">
+        <div class="panel-heading">
+            <div class="row">
+                <div class="form-group">
+                    <div class="col-md-3">
+                        @Html.LabelFor(model => model.Title, htmlAttributes: new { @class = "control-label" })
+                        @Html.EditorFor(model => model.Title, new { htmlAttributes = new { @class = "form-control" } })
+                        @Html.ValidationMessageFor(model => model.Title, "", new { @class = "text-danger" })
+                    </div>
+                    <div class="col-md-3">
+                        @Html.LabelFor(model => model.RequesterId, htmlAttributes: new { @class = "control-label" })
+                        <div class="input-group">
+                            @Html.DropDownList("RequesterId", null, htmlAttributes: new { @class = "form-control" })
+                            <div class="input-group-btn">
+                                @Html.ActionLink("+", "Create", "Requesters", new { isModal = true }, new { @class = "modal-link btn btn-success", elemento_update = "#RequesterId" })
+                            </div>
+                        </div>
+                        @Html.ValidationMessageFor(model => model.RequesterId, "", new { @class = "text-danger" })
+                    </div>
+                    <div class="col-md-2">
+                        @Html.LabelFor(model => model.LocalErrorId, htmlAttributes: new { @class = "control-label" })
+                        <div class="input-group">
+                            @Html.DropDownList("LocalErrorId", null, htmlAttributes: new { @class = "form-control" })
+                            <div class="input-group-btn">
+                                @Html.ActionLink("+", "Create", "LocalErrors", new { isModal = true }, new { @class = "modal-link btn btn-success", elemento_update = "#LocalErrorId" })
+                            </div>
+                        </div>
+                        @Html.ValidationMessageFor(model => model.LocalErrorId, "", new { @class = "text-danger" })
+                    </div>
+                    <div class="col-md-2">
+                        @Html.LabelFor(model => model.InitalDate, htmlAttributes: new { @class = "control-label" })
+                        @Html.DatePickerFor(model => model.InitalDate, new { htmlAttributes = new { @class = "form-control" } })
+                        @*@Html.ValidationMessageFor(model => model.InitalDate, "", new { @class = "text-danger" })*@
+                    </div>
+                    <div class="col-md-2">
+                        @Html.LabelFor(model => model.FinalDate, htmlAttributes: new { @class = "control-label" })
+                        @Html.DatePickerFor(model => model.FinalDate, new { @class = "form-control", @disabled = "" })
+                        @*@Html.ValidationMessageFor(model => model.FinalDate, "", new { @class = "text-danger" })*@
+                    </div>
+                </div>
+            </div>
+            <br />
+            <div class="row">
+                <div class="form-group">
+                    <div class="col-md-3">
+                        @Html.LabelFor(model => model.ScreenId, htmlAttributes: new { @class = "control-label" })
+                        <div class="input-group">
+                            @Html.DropDownList("ScreenId", null, htmlAttributes: new { @class = "form-control" })
+                            <div class="input-group-btn">
+                                @Html.ActionLink("+", "Create", "Screens", new { isModal = true }, new { @class = "modal-link btn btn-success", elemento_update = "#ScreenId" })
+                            </div>
+                        </div>
+                        @Html.ValidationMessageFor(model => model.ScreenId, "", new { @class = "text-danger" })
+                    </div>
+                    <div class="col-md-3">
+                        @Html.LabelFor(model => model.ProblemId, htmlAttributes: new { @class = "control-label" })
+                        <div class="input-group">
+                            @Html.DropDownList("ProblemId", null, htmlAttributes: new { @class = "form-control" })
+                            <div class="input-group-btn">
+                                @Html.ActionLink("+", "Create", "Problems", new { isModal = true }, new { @class = "modal-link btn btn-success", elemento_update = "#ProblemId" })
+                            </div>
+                        </div>
+                        @Html.ValidationMessageFor(model => model.ProblemId, "", new { @class = "text-danger" })
+                    </div>
+                    <div class="col-md-3">
+                        @Html.LabelFor(model => model.EvidenceOldId, htmlAttributes: new { @class = "control-label" })
+                        @Html.DropDownList("EvidenceOldId", null, "", htmlAttributes: new { @class = "form-control" })
+                        @Html.ValidationMessageFor(model => model.EvidenceOldId, "", new { @class = "text-danger" })
+                    </div>
+                    <div class="col-md-3">
+                        @Html.LabelFor(model => model.SolutionId, htmlAttributes: new { @class = "control-label" })
+                        @Html.DropDownList("SolutionId", null, "", htmlAttributes: new { @class = "form-control" })
+                        @Html.ValidationMessageFor(model => model.SolutionId, "", new { @class = "text-danger" })
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="panel-body">
+            <div class="row">
+                <div class="form-group">
+                    <div class="col-md-12">
+                        @Html.TextAreaFor(model => model.Description, new { htmlAttributes = new { @class = "form-control, textarea" } })
+                        @Html.ValidationMessageFor(model => model.Description, "", new { @class = "text-danger" })
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="panel-footer">
+            <input type="submit" value="Create" class="btn btn-default" />
+            @Html.ActionLink("Cancelar", "Edit", "Activities", new { Id = Model.ActivityId }, new { @class = "btn btn-danger" })
+        </div>
+    </div>
+                    }
+
+@section Scripts {
+    @Scripts.Render("~/bundles/jqueryval")
+}
